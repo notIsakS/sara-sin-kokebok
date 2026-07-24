@@ -119,22 +119,6 @@ function FilterSidebar({
         </select>
       </div>
 
-      <details className="filter-section" open>
-        <summary>Tags</summary>
-        <div className="filter-options">
-          {tags.map((tag) => (
-            <label className="filter-option" key={tag}>
-              <input
-                type="checkbox"
-                checked={selectedTags.includes(tag)}
-                onChange={() => onToggleTag(tag)}
-              />
-              <span>{tag}</span>
-            </label>
-          ))}
-        </div>
-      </details>
-
       <details className="filter-section">
         <summary>Unngå allergener</summary>
         <div className="filter-options">
@@ -146,6 +130,22 @@ function FilterSidebar({
                 onChange={() => onToggleAllergen(allergen)}
               />
               <span>{allergen}</span>
+            </label>
+          ))}
+        </div>
+      </details>
+
+      <details className="filter-section">
+        <summary>Tags</summary>
+        <div className="filter-options">
+          {tags.map((tag) => (
+            <label className="filter-option" key={tag}>
+              <input
+                type="checkbox"
+                checked={selectedTags.includes(tag)}
+                onChange={() => onToggleTag(tag)}
+              />
+              <span>{tag}</span>
             </label>
           ))}
         </div>

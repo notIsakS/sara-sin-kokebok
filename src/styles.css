@@ -231,26 +231,25 @@
     box-shadow:
       0 0.35rem 1rem
       rgb(57 44 32 / 6%);
+
+    cursor: pointer;
+    transition:
+      transform 150ms ease,
+      border-color 150ms ease,
+      box-shadow 150ms ease;
   }
   
   .recipe-list-card:hover {
+    transform: translateY(-0.15rem);
     border-color: #a88b6f;
+    box-shadow:
+      0 0.75rem 1.5rem
+      rgb(57 44 32 / 10%);
   }
-  
-  .recipe-list-card__labels {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    color: #75543b;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-  
-  .recipe-list-card h2 {
-    margin: 0.35rem 0;
-    font-size: clamp(
-      1.45rem,
+
+  .recipe-list-card:focus-visible {
+    outline: 3px solid #cda77f;
+    outline-offset: 0.2rem;
       3vw,
       2rem
     );
@@ -309,22 +308,23 @@
   }
   
   .open-recipe-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
     min-width: 9rem;
     padding: 0.75rem 1rem;
+
     color: #ffffff;
     background-color: #59402c;
-    border: 0;
     border-radius: 0.4rem;
     font-weight: 700;
+
+    pointer-events: none;
   }
-  
-  .open-recipe-button:hover {
+
+  .recipe-list-card:hover .open-recipe-button {
     background-color: #3f2c1e;
-  }
-  
-  .open-recipe-button:focus-visible {
-    outline: 3px solid #cda77f;
-    outline-offset: 0.2rem;
   }
   
   .no-results {

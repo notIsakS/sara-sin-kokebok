@@ -27,7 +27,20 @@ function RecipeList({ recipes, onSelectRecipe }: RecipeListProps) {
 
       <div className="recipe-list">
         {recipes.map((recipe) => (
-          <article className="recipe-list-card" key={recipe.id}>
+          <article
+            className="recipe-list-card"
+            key={recipe.id}
+            role="button"
+            tabIndex={0}
+            aria-label={`Åpne oppskriften ${recipe.title}`}
+            onClick={() => onSelectRecipe(recipe.id)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                onSelectRecipe(recipe.id);
+              }
+            }}
+          >
             <div className="recipe-list-card__content">
               <div className="recipe-list-card__labels">
                 <span>{recipe.category}</span>
@@ -61,13 +74,9 @@ function RecipeList({ recipes, onSelectRecipe }: RecipeListProps) {
               </p>
             </div>
 
-            <button
-              className="open-recipe-button"
-              type="button"
-              onClick={() => onSelectRecipe(recipe.id)}
-            >
+            <span className="open-recipe-button" aria-hidden="true">
               Åpne oppskrift
-            </button>
+            </span>
           </article>
         ))}
       </div>
