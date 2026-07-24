@@ -1,6 +1,6 @@
 import type { Recipe } from '../../types/Recipe';
 
-export const pannekaker: Recipe = {
+export const recipe: Recipe = {
   id: 'pannekaker',
   title: 'Pannekaker',
   category: 'Middag',

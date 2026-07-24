@@ -1,0 +1,23 @@
+/* Legg denne importen etter den eksisterende styles.css-importen i main.tsx. */
+
+.ingredient-group + .ingredient-group {
+  margin-top: 1.75rem;
+}
+
+.ingredient-group h3 {
+  margin: 0 0 0.65rem;
+  color: #68492f;
+  font-size: 1rem;
+}
+
+.recipe-warning {
+  padding: 0.85rem 1rem;
+  background-color: #fff4d8;
+  border-left: 0.25rem solid #a36f20;
+  border-radius: 0.25rem;
+}
+
+.recipe-information__note {
+  color: #665e56;
+  font-size: 0.92rem;
+}
