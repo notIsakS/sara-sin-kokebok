@@ -30,3 +30,12 @@ coverage/
 # Local editor/project files
 .idea/
 *.local
+
+# Tooling caches and temp files
+.eslintcache
+.cache/
+*.tgz
+
+# Yarn/Pnpm caches (optional)
+.yarn/*
+.pnpm-debug.log*
