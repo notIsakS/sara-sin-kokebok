@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import FilterSidebar from './components/FilterSidebar';
 import RecipeList from './components/RecipeList';
 import RecipeView from './components/RecipeView';
+import ScrollToTopButton from './components/ScrollToTopButton';
 import { recipes } from './data/recipes';
 import type { Allergen, Difficulty } from './types/Recipe';
 
@@ -165,37 +166,45 @@ function App() {
   }
 
   if (selectedRecipe) {
-    return <RecipeView recipe={selectedRecipe} onReturnToMenu={returnToRecipes} />;
+    return (
+      <>
+        <RecipeView recipe={selectedRecipe} onReturnToMenu={returnToRecipes} />
+        <ScrollToTopButton />
+      </>
+    );
   }
 
   return (
-    <main className="catalog-page">
-      <div className="catalog-layout">
-        <FilterSidebar
-          recipes={recipes}
-          searchTerm={searchTerm}
-          ingredientTerm={ingredientTerm}
-          selectedCategories={selectedCategories}
-          selectedDifficulties={selectedDifficulties}
-          selectedTags={selectedTags}
-          excludedAllergens={excludedAllergens}
-          resultCount={filteredRecipes.length}
-          onSearchTermChange={setSearchTerm}
-          onIngredientTermChange={setIngredientTerm}
-          onToggleCategory={toggleCategory}
-          onToggleDifficulty={toggleDifficulty}
-          onToggleTag={toggleTag}
-          onToggleAllergen={toggleAllergen}
-          onClearCategories={clearCategories}
-          onClearDifficulties={clearDifficulties}
-          onClearAllergens={clearAllergens}
-          onClearTags={clearTags}
-          onReset={resetFilters}
-        />
+    <>
+      <main className="catalog-page">
+        <div className="catalog-layout">
+          <FilterSidebar
+            recipes={recipes}
+            searchTerm={searchTerm}
+            ingredientTerm={ingredientTerm}
+            selectedCategories={selectedCategories}
+            selectedDifficulties={selectedDifficulties}
+            selectedTags={selectedTags}
+            excludedAllergens={excludedAllergens}
+            resultCount={filteredRecipes.length}
+            onSearchTermChange={setSearchTerm}
+            onIngredientTermChange={setIngredientTerm}
+            onToggleCategory={toggleCategory}
+            onToggleDifficulty={toggleDifficulty}
+            onToggleTag={toggleTag}
+            onToggleAllergen={toggleAllergen}
+            onClearCategories={clearCategories}
+            onClearDifficulties={clearDifficulties}
+            onClearAllergens={clearAllergens}
+            onClearTags={clearTags}
+            onReset={resetFilters}
+          />
 
-        <RecipeList recipes={filteredRecipes} onSelectRecipe={selectRecipe} />
-      </div>
-    </main>
+          <RecipeList recipes={filteredRecipes} onSelectRecipe={selectRecipe} />
+        </div>
+      </main>
+      <ScrollToTopButton />
+    </>
   );
 }
 

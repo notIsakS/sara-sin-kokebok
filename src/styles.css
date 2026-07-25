@@ -508,6 +508,49 @@
     margin-inline: auto;
   }
 
+  /* Scroll to top button */
+
+  .scroll-to-top-button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #2d2924;
+    color: #f5f0e7;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(45, 41, 36, 0.2);
+    transition: all 0.3s ease-in-out;
+    z-index: 100;
+  }
+
+  .scroll-to-top-button:hover {
+    background-color: #3d3a35;
+    box-shadow: 0 4px 12px rgba(45, 41, 36, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .scroll-to-top-button:active {
+    transform: translateY(0);
+  }
+
+  .scroll-to-top-button:focus-visible {
+    outline: 2px solid #2d2924;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 42rem) {
+    .scroll-to-top-button {
+      bottom: 1rem;
+      right: 1rem;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.8125rem;
+    }
+  }
+
   .back-button {
     display: inline-flex;
     align-items: center;
