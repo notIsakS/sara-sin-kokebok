@@ -358,10 +358,6 @@
   .recipe-list-card:focus-visible {
     outline: 3px solid #cda77f;
     outline-offset: 0.2rem;
-      3vw,
-      2rem
-    );
-    line-height: 1.2;
   }
   
   .recipe-list-card__description {
