@@ -141,6 +141,10 @@ function App() {
     setExcludedAllergens([]);
   }
 
+  function clearTags() {
+    setSelectedTags([]);
+  }
+
   function resetFilters() {
     setSearchTerm('');
     setIngredientTerm('');
@@ -185,6 +189,7 @@ function App() {
           onClearCategories={clearCategories}
           onClearDifficulties={clearDifficulties}
           onClearAllergens={clearAllergens}
+          onClearTags={clearTags}
           onReset={resetFilters}
         />
 

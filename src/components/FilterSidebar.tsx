@@ -18,6 +18,7 @@ interface FilterSidebarProps {
   onClearCategories: () => void;
   onClearDifficulties: () => void;
   onClearAllergens: () => void;
+  onClearTags: () => void;
   onReset: () => void;
 }
 
@@ -45,6 +46,7 @@ function FilterSidebar({
   onClearCategories,
   onClearDifficulties,
   onClearAllergens,
+  onClearTags,
   onReset,
 }: FilterSidebarProps) {
   const categories = getUniqueValues(recipes.map((recipe) => recipe.category));
@@ -97,8 +99,8 @@ function FilterSidebar({
         />
       </div>
 
-      <fieldset className="filter-choice-group">
-        <legend>
+      <details className="filter-section">
+        <summary>
           <span>Kategori</span>
 
           <span className="filter-choice-legend-actions">
@@ -116,7 +118,7 @@ function FilterSidebar({
               Alle
             </button>
           </span>
-        </legend>
+        </summary>
 
         <div className="filter-choice-grid">
           {categories.map((category) => (
@@ -134,10 +136,10 @@ function FilterSidebar({
             </label>
           ))}
         </div>
-      </fieldset>
+      </details>
 
-      <fieldset className="filter-choice-group">
-        <legend>
+      <details className="filter-section">
+        <summary>
           <span>Vanskelighetsgrad</span>
 
           <span className="filter-choice-legend-actions">
@@ -155,7 +157,7 @@ function FilterSidebar({
               Alle
             </button>
           </span>
-        </legend>
+        </summary>
 
         <div className="filter-choice-grid">
           {difficulties.map((difficulty) => (
@@ -173,27 +175,28 @@ function FilterSidebar({
             </label>
           ))}
         </div>
-      </fieldset>
+      </details>
 
       <details className="filter-section">
         <summary>
           <span>Unngå allergener</span>
-          {excludedAllergens.length > 0 && (
-            <span className="filter-selection-count">
-              {excludedAllergens.length}
-            </span>
-          )}
-        </summary>
 
-        <div className="filter-section-actions">
-          <button
-            type="button"
-            className="filter-choice-clear"
-            onClick={onClearAllergens}
-          >
-            Alle
-          </button>
-        </div>
+          <span className="filter-choice-legend-actions">
+            {excludedAllergens.length > 0 && (
+              <span className="filter-selection-count">
+                {excludedAllergens.length}
+              </span>
+            )}
+
+            <button
+              type="button"
+              className="filter-choice-clear"
+              onClick={onClearAllergens}
+            >
+              Alle
+            </button>
+          </span>
+        </summary>
 
         <div className="filter-choice-grid filter-choice-grid--allergens">
           {allergens.map((allergen) => (
@@ -216,11 +219,22 @@ function FilterSidebar({
       <details className="filter-section">
         <summary>
           <span>Tags</span>
-          {selectedTags.length > 0 && (
-            <span className="filter-selection-count">
-              {selectedTags.length}
-            </span>
-          )}
+
+          <span className="filter-choice-legend-actions">
+            {selectedTags.length > 0 && (
+              <span className="filter-selection-count">
+                {selectedTags.length}
+              </span>
+            )}
+
+            <button
+              type="button"
+              className="filter-choice-clear"
+              onClick={onClearTags}
+            >
+              Alle
+            </button>
+          </span>
         </summary>
 
         <div className="filter-choice-grid">
