@@ -4,17 +4,20 @@ interface FilterSidebarProps {
   recipes: Recipe[];
   searchTerm: string;
   ingredientTerm: string;
-  selectedCategory: string;
-  selectedDifficulty: string;
+  selectedCategories: string[];
+  selectedDifficulties: Difficulty[];
   selectedTags: string[];
   excludedAllergens: Allergen[];
   resultCount: number;
   onSearchTermChange: (value: string) => void;
   onIngredientTermChange: (value: string) => void;
-  onCategoryChange: (value: string) => void;
-  onDifficultyChange: (value: string) => void;
+  onToggleCategory: (category: string) => void;
+  onToggleDifficulty: (difficulty: Difficulty) => void;
   onToggleTag: (tag: string) => void;
   onToggleAllergen: (allergen: Allergen) => void;
+  onClearCategories: () => void;
+  onClearDifficulties: () => void;
+  onClearAllergens: () => void;
   onReset: () => void;
 }
 
@@ -28,17 +31,20 @@ function FilterSidebar({
   recipes,
   searchTerm,
   ingredientTerm,
-  selectedCategory,
-  selectedDifficulty,
+  selectedCategories,
+  selectedDifficulties,
   selectedTags,
   excludedAllergens,
   resultCount,
   onSearchTermChange,
   onIngredientTermChange,
-  onCategoryChange,
-  onDifficultyChange,
+  onToggleCategory,
+  onToggleDifficulty,
   onToggleTag,
   onToggleAllergen,
+  onClearCategories,
+  onClearDifficulties,
+  onClearAllergens,
   onReset,
 }: FilterSidebarProps) {
   const categories = getUniqueValues(recipes.map((recipe) => recipe.category));
@@ -91,61 +97,145 @@ function FilterSidebar({
         />
       </div>
 
-      <div className="filter-control">
-        <label htmlFor="category-filter">Kategori</label>
-        <select
-          id="category-filter"
-          value={selectedCategory}
-          onChange={(event) => onCategoryChange(event.target.value)}
-        >
-          <option value="">Alle kategorier</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>{category}</option>
-          ))}
-        </select>
-      </div>
+      <fieldset className="filter-choice-group">
+        <legend>
+          <span>Kategori</span>
 
-      <div className="filter-control">
-        <label htmlFor="difficulty-filter">Vanskelighetsgrad</label>
-        <select
-          id="difficulty-filter"
-          value={selectedDifficulty}
-          onChange={(event) => onDifficultyChange(event.target.value)}
-        >
-          <option value="">Alle vanskelighetsgrader</option>
-          {difficulties.map((difficulty) => (
-            <option key={difficulty} value={difficulty}>{difficulty}</option>
+          <span className="filter-choice-legend-actions">
+            {selectedCategories.length > 0 && (
+              <span className="filter-selection-count">
+                {selectedCategories.length}
+              </span>
+            )}
+
+            <button
+              type="button"
+              className="filter-choice-clear"
+              onClick={onClearCategories}
+            >
+              Alle
+            </button>
+          </span>
+        </legend>
+
+        <div className="filter-choice-grid">
+          {categories.map((category) => (
+            <label className="filter-choice" key={category}>
+              <input
+                className="filter-choice__input"
+                type="checkbox"
+                checked={selectedCategories.includes(category)}
+                onChange={() => onToggleCategory(category)}
+              />
+
+              <span className="filter-choice__label">
+                {category}
+              </span>
+            </label>
           ))}
-        </select>
-      </div>
+        </div>
+      </fieldset>
+
+      <fieldset className="filter-choice-group">
+        <legend>
+          <span>Vanskelighetsgrad</span>
+
+          <span className="filter-choice-legend-actions">
+            {selectedDifficulties.length > 0 && (
+              <span className="filter-selection-count">
+                {selectedDifficulties.length}
+              </span>
+            )}
+
+            <button
+              type="button"
+              className="filter-choice-clear"
+              onClick={onClearDifficulties}
+            >
+              Alle
+            </button>
+          </span>
+        </legend>
+
+        <div className="filter-choice-grid">
+          {difficulties.map((difficulty) => (
+            <label className="filter-choice" key={difficulty}>
+              <input
+                className="filter-choice__input"
+                type="checkbox"
+                checked={selectedDifficulties.includes(difficulty)}
+                onChange={() => onToggleDifficulty(difficulty)}
+              />
+
+              <span className="filter-choice__label">
+                {difficulty}
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
       <details className="filter-section">
-        <summary>Unngå allergener</summary>
-        <div className="filter-options">
+        <summary>
+          <span>Unngå allergener</span>
+          {excludedAllergens.length > 0 && (
+            <span className="filter-selection-count">
+              {excludedAllergens.length}
+            </span>
+          )}
+        </summary>
+
+        <div className="filter-section-actions">
+          <button
+            type="button"
+            className="filter-choice-clear"
+            onClick={onClearAllergens}
+          >
+            Alle
+          </button>
+        </div>
+
+        <div className="filter-choice-grid filter-choice-grid--allergens">
           {allergens.map((allergen) => (
-            <label className="filter-option" key={allergen}>
+            <label className="filter-choice" key={allergen}>
               <input
+                className="filter-choice__input"
                 type="checkbox"
                 checked={excludedAllergens.includes(allergen)}
                 onChange={() => onToggleAllergen(allergen)}
               />
-              <span>{allergen}</span>
+
+              <span className="filter-choice__label">
+                {allergen}
+              </span>
             </label>
           ))}
         </div>
       </details>
 
       <details className="filter-section">
-        <summary>Tags</summary>
-        <div className="filter-options">
+        <summary>
+          <span>Tags</span>
+          {selectedTags.length > 0 && (
+            <span className="filter-selection-count">
+              {selectedTags.length}
+            </span>
+          )}
+        </summary>
+
+        <div className="filter-choice-grid">
           {tags.map((tag) => (
-            <label className="filter-option" key={tag}>
+            <label className="filter-choice" key={tag}>
               <input
+                className="filter-choice__input"
                 type="checkbox"
                 checked={selectedTags.includes(tag)}
                 onChange={() => onToggleTag(tag)}
               />
-              <span>{tag}</span>
+
+              <span className="filter-choice__label">
+                {tag}
+              </span>
             </label>
           ))}
         </div>

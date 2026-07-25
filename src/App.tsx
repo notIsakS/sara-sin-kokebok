@@ -4,7 +4,7 @@ import FilterSidebar from './components/FilterSidebar';
 import RecipeList from './components/RecipeList';
 import RecipeView from './components/RecipeView';
 import { recipes } from './data/recipes';
-import type { Allergen } from './types/Recipe';
+import type { Allergen, Difficulty } from './types/Recipe';
 
 function normalize(value: string): string {
   return value.trim().toLocaleLowerCase('nb-NO');
@@ -14,8 +14,8 @@ function App() {
   const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [ingredientTerm, setIngredientTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedDifficulty, setSelectedDifficulty] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedDifficulties, setSelectedDifficulties] = useState<Difficulty[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [excludedAllergens, setExcludedAllergens] = useState<Allergen[]>([]);
 
@@ -53,12 +53,16 @@ function App() {
         );
 
       const matchesCategory =
-        selectedCategory.length === 0 || recipe.category === selectedCategory;
+        selectedCategories.length === 0 ||
+        selectedCategories.includes(recipe.category);
 
       const matchesDifficulty =
-        selectedDifficulty.length === 0 || recipe.difficulty === selectedDifficulty;
+        selectedDifficulties.length === 0 ||
+        selectedDifficulties.includes(recipe.difficulty);
 
-      const matchesTags = selectedTags.every((tag) => recipe.tags.includes(tag));
+      const matchesTags =
+        selectedTags.length === 0 ||
+        selectedTags.some((tag) => recipe.tags.includes(tag));
 
       /**
        * Mulige allergener behandles konservativt og skjules også av filteret.
@@ -79,8 +83,8 @@ function App() {
   }, [
     searchTerm,
     ingredientTerm,
-    selectedCategory,
-    selectedDifficulty,
+    selectedCategories,
+    selectedDifficulties,
     selectedTags,
     excludedAllergens,
   ]);
@@ -95,6 +99,28 @@ function App() {
     );
   }
 
+  function toggleCategory(category: string) {
+    setSelectedCategories((currentCategories) =>
+      currentCategories.includes(category)
+        ? currentCategories.filter(
+            (currentCategory) =>
+              currentCategory !== category,
+          )
+        : [...currentCategories, category],
+    );
+  }
+
+  function toggleDifficulty(difficulty: Difficulty) {
+    setSelectedDifficulties((currentDifficulties) =>
+      currentDifficulties.includes(difficulty)
+        ? currentDifficulties.filter(
+            (currentDifficulty) =>
+              currentDifficulty !== difficulty,
+          )
+        : [...currentDifficulties, difficulty],
+    );
+  }
+
   function toggleAllergen(allergen: Allergen) {
     setExcludedAllergens((current) =>
       current.includes(allergen)
@@ -103,11 +129,23 @@ function App() {
     );
   }
 
+  function clearCategories() {
+    setSelectedCategories([]);
+  }
+
+  function clearDifficulties() {
+    setSelectedDifficulties([]);
+  }
+
+  function clearAllergens() {
+    setExcludedAllergens([]);
+  }
+
   function resetFilters() {
     setSearchTerm('');
     setIngredientTerm('');
-    setSelectedCategory('');
-    setSelectedDifficulty('');
+    setSelectedCategories([]);
+    setSelectedDifficulties([]);
     setSelectedTags([]);
     setExcludedAllergens([]);
   }
@@ -133,17 +171,20 @@ function App() {
           recipes={recipes}
           searchTerm={searchTerm}
           ingredientTerm={ingredientTerm}
-          selectedCategory={selectedCategory}
-          selectedDifficulty={selectedDifficulty}
+          selectedCategories={selectedCategories}
+          selectedDifficulties={selectedDifficulties}
           selectedTags={selectedTags}
           excludedAllergens={excludedAllergens}
           resultCount={filteredRecipes.length}
           onSearchTermChange={setSearchTerm}
           onIngredientTermChange={setIngredientTerm}
-          onCategoryChange={setSelectedCategory}
-          onDifficultyChange={setSelectedDifficulty}
+          onToggleCategory={toggleCategory}
+          onToggleDifficulty={toggleDifficulty}
           onToggleTag={toggleTag}
           onToggleAllergen={toggleAllergen}
+          onClearCategories={clearCategories}
+          onClearDifficulties={clearDifficulties}
+          onClearAllergens={clearAllergens}
           onReset={resetFilters}
         />
 

@@ -145,31 +145,139 @@
   }
   
   .filter-section summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+
     font-size: 0.85rem;
     font-weight: 700;
     cursor: pointer;
   }
   
-  .filter-options {
-    display: grid;
-    gap: 0.35rem;
-    margin-top: 0.65rem;
+  .filter-selection-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 1.4rem;
+    height: 1.4rem;
+    padding-inline: 0.35rem;
+
+    color: #ffffff;
+    background-color: #68492f;
+    border-radius: 999px;
+
+    font-size: 0.7rem;
+    line-height: 1;
   }
-  
-  .filter-option {
+
+  .filter-choice-legend-actions {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    min-height: 1.8rem;
-    font-size: 0.83rem;
+  }
+
+  .filter-choice-clear {
+    cursor: pointer;
+    padding: 0.35rem 0.75rem;
+    color: #403830;
+    background-color: #f5f0e7;
+    border: 1px solid #cfc3b6;
+    border-radius: 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+    transition: background-color 120ms ease, border-color 120ms ease;
+  }
+
+  .filter-choice-clear:hover {
+    background-color: #f1e7da;
+    border-color: #a98c70;
+  }
+
+  .filter-choice-group {
+    min-width: 0;
+    padding: 0;
+    margin: 0 0 1rem;
+    border: 0;
+  }
+
+  .filter-choice-group legend {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 0.45rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .filter-choice-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .filter-choice-grid--allergens {
+    margin-top: 0.7rem;
+  }
+
+  .filter-choice {
+    position: relative;
+    min-width: 0;
     cursor: pointer;
   }
-  
-  .filter-option input {
-    width: 1rem;
-    height: 1rem;
-    margin: 0;
-    accent-color: #68492f;
+
+  .filter-choice__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .filter-choice__label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 2.3rem;
+    padding: 0.45rem 0.5rem;
+
+    color: #403830;
+    background-color: #faf8f4;
+    border: 1px solid #cfc3b6;
+    border-radius: 0.4rem;
+
+    font-size: 0.8rem;
+    line-height: 1.2;
+    text-align: center;
+
+    transition:
+      color 120ms ease,
+      background-color 120ms ease,
+      border-color 120ms ease,
+      transform 120ms ease;
+  }
+
+  .filter-choice:hover .filter-choice__label {
+    background-color: #f1e7da;
+    border-color: #a98c70;
+  }
+
+  .filter-choice__input:checked + .filter-choice__label {
+    color: #ffffff;
+    background-color: #68492f;
+    border-color: #68492f;
+  }
+
+  .filter-choice__input:focus-visible + .filter-choice__label {
+    outline: 3px solid #d4b38f;
+    outline-offset: 0.15rem;
+  }
+
+  .filter-choice__input:active + .filter-choice__label {
+    transform: scale(0.98);
   }
   
   /* Oppskriftslisten */
